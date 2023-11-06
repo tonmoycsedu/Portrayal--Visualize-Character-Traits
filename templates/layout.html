@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/bootstrap/bootstrap.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/semantic2.4/semantic.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/quill/quill.snow.css')}}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/quill/quill.bubble.css')}}"> -->
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom.css') }}">
+
+    <title>Narrative Viz</title>
+</head>
+<body>
+
+	<!-- Nav bar start -->
+	<nav class="navbar navbar-expand-lg navbar-light site-color mainnav">
+		<a class="navbar-brand site-title" href="{{url_for('home')}}"><i>Homepage</i></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+	  </button>
+    {% if 'email' in session %}
+        <a class="nav-item nav-link" href="{{url_for('home')}}"> {{session['email']}}</a>
+        <a class="nav-item nav-link" href="{{url_for('logout')}}"> Log Out</a>
+    {% endif%}
+    <a class="ui large horizontal label">Story: {{name}}</a>
+    <div id="annotate_checkbox" class="ui toggle checkbox" style="margin-left: 100px;">
+      <input id="annotate_toggle" id="toggle-ui" type="checkbox" name="public">
+      <label>Annotate Story</label>
+    </div>
+
+    <div id="visualize_checkbox" class="ui toggle checkbox" style="margin-left: 50px; margin-right: 10px;">
+      <input id="visualize_toggle" id="toggle-ui" type="checkbox" name="public" checked>
+      <label>Visualize Story</label>
+    </div>
+    <div id="details" class="ui mini breadcrumb deactive">
+      <div id="active_chapter" class="section"></div>
+      <div id="active_divider" class="divider"></div>
+      <div id="active_character" class="ui section" style="color: red;"></div>
+    </div>
+    <button class="ui mini blue deselect button" style="display:none">Remove selection</button>
+
+    <!-- <div class="ui huge transparent input">
+      <input id="project_name" type="text" placeholder="Project Name" value="Untitled" style="display: none;">
+    </div> -->
+    
+
+	</nav>
+	<!-- Nav bar end -->
+
+	<!-- main container start -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>

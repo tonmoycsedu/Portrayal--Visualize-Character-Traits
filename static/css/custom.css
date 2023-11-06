@@ -1,0 +1,180 @@
+/* Customizing  the website */
+.site-color {
+  border-bottom:  5px solid #034f84!important;;
+}
+.site-title {
+  color: #fff;
+}
+.mainnav{
+  margin-bottom: 5px;
+}
+
+/* bootstrap styling */
+body, .container-fluid, .full_height{
+  height: 100vh;
+}
+.flex-container {
+  display: flex;
+}
+.flex-child {
+  flex: 1;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.flex-child:first-child {
+  margin-right: 20px;
+}
+
+/* Styling semanti ui objects */ 
+.ui.input {
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+.ui.input>input {
+  margin-right: 10px;
+}
+.ui.dropdown {
+  margin-right: 10px;
+}
+.ui.divided.list>.item {
+  cursor: pointer;
+}
+.ui.label{
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.ui.list {
+  margin-top: 0;
+}
+.deactive{
+  background-color: white;
+}
+
+/* Quill styling, scrolling */
+#editor {
+  height: auto;
+  min-height: 95vh;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+#editor .ql-editor {
+  font-size: 18px;
+  overflow-y: auto;
+}
+#scrolling-container {
+  height: 95vh;
+  min-height: 80vh;
+  overflow-y: auto;
+}
+
+/* semantic ui card */
+.ui.fluid.card {
+  margin-bottom: 10px;
+}
+
+/* annotation style */
+:root {
+  --line-chart-color: #607D8B;
+  --annotation-context-color: #717473;
+  --annotation-above-color: #00BFA5;
+  --annotation-anomaly-color: #E8336D;
+}
+
+/* svg {
+  background-color: white;
+  font-family: 'Lato';
+} */
+
+.axis,
+.axis text {
+  fill: var(--line-chart-color);
+}
+
+.axis line,
+path {
+  stroke: var(--line-chart-color);
+}
+
+/* path {
+  fill: none;
+} */
+
+.annotation path {
+  stroke: var(--annotation-context-color);
+}
+
+.annotation:not(.above):not(.anomaly) path {
+  stroke-dasharray: 1, 3;
+}
+
+.annotation text {
+  fill: var(--annotation-context-color);
+  font-size: 12px!important;
+}
+
+.annotation.above path {
+  stroke: var(--annotation-above-color);
+}
+
+.annotation.above text {
+  fill: var(--annotation-above-color);
+}
+
+.annotation.anomaly path {
+  stroke: var(--annotation-anomaly-color);
+  stroke-width: 2px;
+}
+
+.annotation.anomaly text {
+  fill: var(--annotation-anomaly-color);
+}
+
+.annotation-note-bg {
+  fill: rgba(0, 0, 0, 0);
+}
+
+.annotation-note-title {
+  font-weight: bold;
+}
+
+/* text.title {
+  font-size: 1.2em;
+  font-weight: bold;
+} */
+
+/* other objects */
+#header {
+  height: 5vh;
+  position: relative;
+}
+.control {
+  display: inline-block;
+  margin-top: 10px;
+}
+#loading_text {
+  position: absolute;
+  visibility: hidden;
+  left: 50%;
+  font-size: 18pt;
+}
+input[type="range"] {
+  margin: .4em;
+}
+.feat_labels {
+  font-size: 10px;
+  fill: grey;
+  font-family: Gill Sans, sans-serif
+}
+
+#frames{
+  position: absolute;
+  top: 65vh;
+  overflow-y: scroll;
+  /* overflow-x: scroll; */
+  height: 300px;
+  background: rgb(246, 246, 246);
+  border: solid grey;
+  /* display: none; */
+}
+
+

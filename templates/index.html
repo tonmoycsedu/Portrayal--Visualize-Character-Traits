@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container-fluid">
+	<div class="row">
+		<div id="vis_div" class="col-lg-8" style="border-left: 0.1px solid #e8e2e2;">
+			<div id="storyline_header" class="row">
+				<div class="col-lg-12">
+					<select id="feature_list" placeholder="Features" class="ui search dropdown" multiple="">
+						<option value="">Features</option>
+						<option value="all">All</option>
+						<option value="presence" selected>Presence</option>
+						<option value="direct_discourse">Direct Discourse</option>
+						<option value="adjective">Direct Definition</option>
+						<option value="sentiment">Sentiment</option>
+						<option value="emotion">Emotion</option>
+						<option value="actions_only">Actions</option>
+						<option value="change_in_action">Changes in Actions</option>
+					</select>
+					<select id="character_list" placeholder="Features" class="ui search dropdown" multiple="">
+						<option value="">Characters</option>
+					</select>
+					<!-- <select id="chapter_list" placeholder="Features" class="ui search dropdown" multiple="">
+						<option value="">Chapters</option>
+					</select> -->
+					<button id='update_storyline' class='ui mini disabled button primary'>Show Traits</button>
+					<input id="show_context" type="checkbox" checked> Show Context</button>
+				</div>	
+			</div>
+			<hr>
+			<div id="storyline" style="height:75vh;" class="row"></div>
+			<!-- <hr> -->
+			<!-- <div id="scatterplot" style="height:30vh"></div> -->
+		</div>
+		<div id="annotate_div" class="col-lg-8" style="border-left: 0.1px solid #e8e2e2; display: none;">
+			<div id="storyline_header" class="col-lg-12">
+				<!-- <div class="ui input annotate_parameter">
+					<input id="parts" type="number" placeholder="Number of parts">
+				</div>
+				<br>
+				<div class="ui input annotate_parameter">
+					<input id="parts_regex" type="text" placeholder="Regex for parts">
+					<input id="chapters_regex" type="number" placeholder="Regex for chapters">
+				</div> -->
+				<br>
+				<button id='start_annotation' class='ui medium button primary'>Start Annotation</button>
+				<button id='load_data' class='ui medium button primary'>Load Previous Data</button>
+			</div>
+			<hr>
+			<div class="col-lg-12">
+				<label>Minimum number of mentions:</label>
+				<input type="range" min="1" max="100" value="10" class="slider" id="coref_threshold">
+				<select id="part_list" placeholder="Part" class="ui search dropdown">
+					<option value="">Part</option>
+				</select>
+				<select id="chapter_list" placeholder="Chapter" class="ui search dropdown">
+					<option value="">Chapter</option>
+				</select>
+			</div>
+			<div class="col-lg-12">
+				<h3>Current Part/Chapter</h3>
+				<div id="current_chapter" class="col-lg-12"></div>
+				<h3>All Part/Chapter</h3>
+				<div id="all_chapter" class="col-lg-12"></div>
+			</div>
+			<button id='save_annotation' style="margin-top: 20px;" class='ui medium green button'>Save Annotation</button>
+			
+		</div>
+		<div id="editor_div" class="col-lg-4">
+			<div class="ui form">
+				<div class="field">
+					<div id="scrolling-container">
+						<div id="editor"></div>
+					</div>
+				</div>
+			</div>
+			<div id="frames" class="flex-container">
+				<div id="frame_list1" class="ui relaxed divided list flex-child"></div>
+				<div id="frame_list2" class="ui relaxed divided list flex-child"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var name = {{name|tojson}}
+	var doc = {{doc|tojson}}
+	// console.log(name, doc)
+</script>
+
+<!-- Main JavaScript -->
+<script type = "text/javascript" src="{{ url_for('static', filename='vendor/jquery/jquery-3.3.1.min.js') }}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type = "text/javascript" src="{{ url_for('static', filename='vendor/bootstrap/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/semantic2.4/semantic.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/quill/quill.min.js') }}"></script>
+<!-- <script src="https://d3js.org/d3.v6.min.js"></script> -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"></script>
+<!-- Latest Sortable -->
+<script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/d3-array@3"></script> -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://unpkg.com/d3-force-cluster@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-bboxCollide@1.0.4/build/d3-bboxCollide.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.4"></script>
+<!-- <script type="module">
+	import * as Plot from "https://cdn.skypack.dev/@observablehq/plot@0.4";
+</script> -->
+<!-- <script type ="text/javascript" src="{{ url_for('static', filename='vendor/plotly-latest.min.js')}}"></script> -->
+
+<!-- user js files -->
+<script src="{{ url_for('static', filename='js/config.js') }}"></script>
+<script src="{{ url_for('static', filename='js/legend.js') }}"></script>
+<script src="{{ url_for('static', filename='js/annotation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/character.js') }}"></script>
+<script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cards/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cards/presence.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cards/sentiment.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cards/emotion.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cards/discourse.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cards/actions_only.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cards/actions.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cards/context.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cards/adjectives.js') }}"></script>
+<script src="{{ url_for('static', filename='js/visualization.js') }}"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+
+{% endblock content %}
